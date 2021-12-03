@@ -5,7 +5,7 @@ import json
 import pandas as pd
 import time
 
-time.sleep(10)
+time.sleep(15)
 
 # cur.execute('insert into users (gender,\
 #                                 age,\
@@ -61,7 +61,7 @@ def user():
         # cur.execute("SELECT LASTVAL()")
         # user_id = cur.fetchone()[0]
         cur.close()
-        return json.dumps({"new_user": 'Se registró un nuevo usuario'})
+        return json.dumps({"new_user": 'Se registro un nuevo usuario'})
 
     if request.method == "DELETE":
         cur = conn.cursor()

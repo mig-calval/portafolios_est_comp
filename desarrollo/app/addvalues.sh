@@ -15,3 +15,7 @@ curl -X POST -H "Content-Type: application/json"\
 
 
 curl '0.0.0.0:8080/mesdia?mes=12&dia=12' > la_guadalupana.json
+
+curl -X POST -H "Content-Type: application/json"\
+     -d '{"gender": 1, "age": 67, "hypertension": 0, "heart_disease": 1, "ever_married": 1, "Residence_type": 1, "avg_glucose_level": "228.69", "bmi": "36.6", "smoking_status": 2, "stroke": 1}'\
+     0.0.0.0:8080/user

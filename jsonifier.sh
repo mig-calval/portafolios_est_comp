@@ -1,0 +1,1 @@
+jq -R 'split(",")' healthcare-dataset-stroke-data.csv | jq -csf csv2json-helper.jq > datos_json.txt
