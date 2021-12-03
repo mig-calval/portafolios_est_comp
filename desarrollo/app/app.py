@@ -95,9 +95,9 @@ def users():
     if request.method == "POST":
         cur = conn.cursor()
         users = request.json
-        users_list = [(user["name"], user["lastname"], user["age"]) for user in users]
+        users_list = [(user["gender"], user["age"], user["hypertension"], user["heart_disease"], user["ever_married"], user["Residence_type"], user["avg_glucose_level"], user["bmi"], user["smoking_status"], user["stroke"]) for user in users]
         cur.executemany(
-            "insert into users (name, lastname, age) values (%s, %s, %s)", users_list
+            "insert into users (gender, age, hypertension, heart_disease, ever_married, Residence_type , avg_glucose_level, bmi, smoking_status, stroke) values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", users_list
         )
         conn.commit()
         cur.close()
