@@ -20,4 +20,4 @@ insert into users (gender,
                     bmi,
                     smoking_status,
                     stroke) values 
-                    (1, 67, 0, 1, 1, 1, 228.69, 36.6, 2, 1);                                                    
+                    (1, 67, 0, 1, 1, 1, 228.69, 36.6, 2, 1);
