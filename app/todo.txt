@@ -20,3 +20,9 @@ Imprimir bonito resultados
 Savemodels y volumenes
 Paramgrid json 
 Acabar delete, post de user y users
+Mandar json usuario incompleto
+Docker solo corre cuando acaba db
+
+
+
+https://www.techwithtim.net/tutorials/flask/adding-bootstrap/
