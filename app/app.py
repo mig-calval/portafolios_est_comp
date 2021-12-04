@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, session, redirect
 import psycopg2
 import psycopg2.extras
 import json
@@ -179,7 +179,18 @@ def show_local_models():
         return json.dumps({"message":'No hay modelos locales guardados'})
     else: 
         return json.dumps([x._asdict() for x in aux], default=str)
-    
+
+@app.route("/tabla_bonita")
+def render_table():
+    cur = conn.cursor(cursor_factory=psycopg2.extras.NamedTupleCursor)
+    cur.execute("select * from users")
+    results = cur.fetchall()
+    cur.close()
+    all_data = pd.DataFrame(results, columns = ['id', 'gender', 'age', 'hypertension', 'heart_disease', \
+            'ever_married', 'Residence_type', 'avg_glucose_level', 'bmi', 'smoking_status', 'stroke'])
+
+    return render_template('simple.html',  tables=[all_data.to_html(classes='data')], titles=all_data.columns.values)
+
 
 if __name__ == "__main__":
     try:
