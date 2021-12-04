@@ -5,6 +5,7 @@ dependencies:
   - autopep8
   - flake8
   - jedi
+  - numpy
   - pandas
   - pip
   - pylint
@@ -13,3 +14,4 @@ dependencies:
   - psycopg2
   - sqlalchemy
   - flask-sqlalchemy
+  - joblib

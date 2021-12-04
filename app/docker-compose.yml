@@ -15,7 +15,10 @@ services:
     build: .
     env_file:
       - ".env"
+    volumes:
+      - ./modelos:/app/modelos
     ports:
       - 8080:8080
     depends_on:
       - "db"
+    container_name: web_miguel_adrian

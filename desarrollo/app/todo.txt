@@ -1,6 +1,0 @@
-1. Que jale POST
-2. Que la base no se cree en cada instancia sino que, si ya está hecha, sólo la lea.
-3. Ocupar BASH para preprocesamiento y carga inicial con curl
-4. Dejar todo listo para que jale con curl
-5. Ajustar modelo, y permitir predicciones y que se reajuste
-6. (Extra) Visualización

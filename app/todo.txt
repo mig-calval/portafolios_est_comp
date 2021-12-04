@@ -1,0 +1,22 @@
+2. Que la base no se cree en cada instancia sino que, si ya está hecha, sólo la lea.
+
+6. (Extra) Visualización
+
+1. shell para meterse a docker, y cargar los datos
+2. Manera de inicializar los datos
+
+/SAVEMODEL
+/LISTMODELS
+/LOADMODEL
+
+
+
+
+
+
+
+
+Imprimir bonito resultados
+Savemodels y volumenes
+Paramgrid json 
+Acabar delete, post de user y users
