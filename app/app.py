@@ -166,11 +166,11 @@ def users():
     if request.method == "DELETE":
         users = request.json
         cur = conn.cursor()
-        users_list = [user for user in users["id"]]
-        cur.executemany("delete from users where id=%s", users_list)
+        users_list = [(user,) for user in users["id"]]
+        cur.executemany("delete from users where id=%s",  users_list)
         conn.commit()
         cur.close()
-        return #json.dumps({"mensaje": 'Se borraron correctamente'})
+        return json.dumps({"mensaje": 'Se borraron correctamente'})
 
 @app.route("/save_model")
 def guardar():
