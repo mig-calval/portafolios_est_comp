@@ -1,31 +1,6 @@
-2. Que la base no se cree en cada instancia sino que, si ya está hecha, sólo la lea.
-
-6. (Extra) Visualización
-
-1. shell para meterse a docker, y cargar los datos
-2. Manera de inicializar los datos
-
-/SAVEMODEL
-/LISTMODELS
-/LOADMODEL
-
-
-
-
-
 docker exec web_miguel_adrian curl -X POST -H "Content-Type: application/json" -d @app/datos_json.txt 0.0.0.0:8080/users
 
-
-
-
-
-
-
-
-
-
 https://www.techwithtim.net/tutorials/flask/adding-bootstrap/
-
 
 Para Mañana
 

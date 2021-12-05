@@ -8,7 +8,7 @@ sed -i 's/Male/1/g' /app/healthcare-dataset-stroke-data-2.csv
 sed -i 's/Yes/1/g' /app/healthcare-dataset-stroke-data-2.csv
 sed -i 's/No/0/g' /app/healthcare-dataset-stroke-data-2.csv
 sed -i 's/Rural/0/g' /app/healthcare-dataset-stroke-data-2.csv
-sed -i 's/Urban/0/g' /app/healthcare-dataset-stroke-data-2.csv
+sed -i 's/Urban/1/g' /app/healthcare-dataset-stroke-data-2.csv
 sed -i 's/never smoked/0/g' /app/healthcare-dataset-stroke-data-2.csv
 sed -i 's/formerly smoked/1/g' /app/healthcare-dataset-stroke-data-2.csv
 sed -i 's/smokes/2/g' /app/healthcare-dataset-stroke-data-2.csv

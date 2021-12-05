@@ -43,6 +43,15 @@ Utilizamos la base de datos tomada de [este sitio en Kaggle](https://www.kaggle.
 
 Además de esto, muchas de las variables eran categóricas de texto, entonces se utilizaron también herramientas de Bash para transformarlas a variables categóricas pero numéricas (e.g. `smoking` = 1, `never smoked` = 2, etc.)
 
+**Relación de variables con los datos originales:**
+
+* Para la variable de género, `Other, Female` = 0, y `Male` = 1. 
+* Para la variable de si han estado casados, `Yes` = 1 y `No` = 0.
+* Para la variable de rural o urbano, `Urban` = 1, y `Rural` = 0. 
+* Para la variable de si ha fumado antes, `never smoked` = 0, `formerly smoked` = 1, `smokes` = 3 y `Unknown` = 4. 
+* No utilizamos la variable de `working type`. 
+* La variable a predecir es `stroke`, toma valores de 0 y 1, por lo tanto es un problema de clasificación lo que tenemos. 
+
 ### Procedimiento de limpieza de datos
 
 El archivo inicial de la base es ` app/healthcare-dataset-stroke-data.csv `, y através de el script de `limpieza.sh`, lo trabajamos con `awk`, `cut` y `sed` para tener la base de datos limpia. Después de esto, utilizamos la aplicación de línea de comando `jq` para pasar estos datos de `.csv` a `.txt`, *pero con el formato de json* (esto se hace en la línea 9 del `Dockerfile` ). Esto es importante para la carga de los datos a la base, ya que lo hacemos con `curl` especificando que son *json*. 
@@ -184,13 +193,20 @@ Además de utilizar curl, muchas de las funciones de la aplicación están en un
 ### Problemas a los que nos enfrentamos
 
 * Nunca pudimos hacer la carga inicial de los datos desde el Dockerfile. Esto es ya que se necesita que esté prendida la concección a `http://localhost:8080`, pero, esto solamente sucede cuando ya se corrió el `ENTRYPOINT`. Por lo tanto, decidimos que poner el comando de `docker exec` sería una buena solución a esto. 
+* Por alguna razón, si una persona en Windows bajaba el archivo desde git, no jalaba correctamente el archivo de `limpieza.sh` logramos resolverlo al comprimir el archivo y pasarlo entre nosotros, pero es un comportamiento que no sabemos como corregir. 
 
 ### Extensiones de este trabajo
 
+Lo que presentamos aquí es una aplicación con procesos de backend buenos y relativamente complejos, pero algo que le falta bastante es una buena interfaz gráfica. Las aplicaciones de Flask generalmente tienen  mucho detrás de ellas y nosotros desconocemos muchas de las tecnologías que se usan en desarrollo web o de aplicaciones móviles. Por lo tanto, muchas de las páginas que presentamos son muy básicas, o les falta algo de contenido. Mientras que los sistemas detrás de todo funcionan bien, tal vez con trabajo o con el apoyo de otra persona que le sepa a temas de diseño web podamos hacer una aplicación mucho más completa y comprensiva. 
 
+Otra posible extensión es que por el momento, solamente estamos usando modelos de Random Forest para entrenar los datos. Sería bueno e interesante poder cargar otros tipos de modelos, y hacer la aplicación más robusta en ese sentido. 
+
+Por ahora, estamos felices con las cosas que presentamos en términos de back end, y es completamente reproducible, que es algo que nos gusta mucho de todo. Además, se puede muy fácilmente actualizar para incluir bases de datos distintas o cambiar la estrictura de la que ya se tiene para poder agregar variables o observaciones, por lo tanto estamos también felices con esta flexibilidad. 
 
 ### Referencias
 
 * [Base de Datos](https://www.kaggle.com/fedesoriano/stroke-prediction-dataset)
 
-https://towardsdatascience.com/the-right-way-to-build-an-api-with-python-cd08ab285f8f
+* https://towardsdatascience.com/the-right-way-to-build-an-api-with-python-cd08ab285f8f
+
+* https://www.techwithtim.net/tutorials/flask/adding-bootstrap/
