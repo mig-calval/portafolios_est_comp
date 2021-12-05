@@ -18,6 +18,6 @@ RUN sed -i 's/never smoked/0/g' /app/healthcare-dataset-stroke-data-2.csv
 RUN sed -i 's/formerly smoked/1/g' /app/healthcare-dataset-stroke-data-2.csv
 RUN sed -i 's/smokes/2/g' /app/healthcare-dataset-stroke-data-2.csv
 RUN sed -i 's/Unknown/3/g' /app/healthcare-dataset-stroke-data-2.csv
-RUN jq -R 'split(",")' /app/healthcare-dataset-stroke-data-2.csv | jq -csf /app/csv2json-helper.jq > /app/datos_json.txt
+RUN jq -R "split(',')" /app/healthcare-dataset-stroke-data-2.csv | jq -csf /app/csv2json-helper.jq > /app/datos_json.txt
 RUN mkdir /app/modelos_locales
 ENTRYPOINT ["conda", "run", "--no-capture-output", "-n", "est_comp", "python", "/app/app.py"]
