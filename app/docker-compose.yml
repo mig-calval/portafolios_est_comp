@@ -22,4 +22,5 @@ services:
       - 8080:8080
     depends_on:
       - "db"
+    restart: on-failure:10
     container_name: web_miguel_adrian

@@ -16,13 +16,18 @@
 docker exec web_miguel_adrian curl -X POST -H "Content-Type: application/json" -d @app/datos_json.txt 0.0.0.0:8080/users
 
 
-Imprimir bonito resultados
-Savemodels y volumenes
-Paramgrid json 
-Acabar delete, post de user y users
-Mandar json usuario incompleto
-Docker solo corre cuando acaba db
+
+
+
+
+
 
 
 
 https://www.techwithtim.net/tutorials/flask/adding-bootstrap/
+
+
+Para Mañana
+
+Ver porque no jala en la maquina de mike desde git...
+Guardar plots de importancia y txt de resultados, y tablas de confusión con cada nombre de modelo, y si se puede visualizar
