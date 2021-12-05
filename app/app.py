@@ -137,15 +137,14 @@ def user():
         user = request.json
         cur = conn.cursor()
         user_id = request.args.get("id")
-        cur.execute(
-            "update users set (name, lastname, age) = (%s,%s,%s) where id=%s ",
-            (user["name"], user["lastname"], user["age"], user_id),
-        )
+        cur.execute("update users set (gender, age, hypertension, heart_disease, ever_married, Residence_type , avg_glucose_level, bmi, smoking_status, stroke) = (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s) where id=%s" ,\
+                   (user["gender"], user["age"], user["hypertension"], user["heart_disease"], user["ever_married"], user["Residence_type"], user["avg_glucose_level"], user["bmi"], user["smoking_status"], user["stroke"], user_id),
+                   )
         conn.commit()
         cur.close()
         return json.dumps({"user_id": user_id})
 
-@app.route("/users", methods=["POST", "GET", "DELETE", "PATCH"])
+@app.route("/users", methods=["POST", "GET", "DELETE"])
 def users():
     if request.method == "GET":
         cur = conn.cursor(cursor_factory=psycopg2.extras.NamedTupleCursor)
@@ -164,6 +163,14 @@ def users():
         conn.commit()
         cur.close()
         return "Correct!!"
+    if request.method == "DELETE":
+        users = request.json
+        cur = conn.cursor()
+        users_list = [user for user in users["id"]]
+        cur.executemany("delete from users where id=%s", users_list)
+        conn.commit()
+        cur.close()
+        return #json.dumps({"mensaje": 'Se borraron correctamente'})
 
 @app.route("/save_model")
 def guardar():
@@ -185,7 +192,7 @@ def show_local_models():
     else: 
         return json.dumps([x._asdict() for x in aux], default=str)
 
-@app.route("/tabla_bonita")
+@app.route("/tabla_usuarios")
 def render_table():
     cur = conn.cursor(cursor_factory=psycopg2.extras.NamedTupleCursor)
     cur.execute("select * from users")
