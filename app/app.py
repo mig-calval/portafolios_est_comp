@@ -295,8 +295,4 @@ def create_figure():
     return fig
 
 if __name__ == "__main__":
-    try:
-        os.mkdir('modelos')
-    except FileExistsError:
-        pass
     app.run(host="0.0.0.0", debug=True, port=8080)

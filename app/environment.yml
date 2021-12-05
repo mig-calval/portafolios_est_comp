@@ -16,3 +16,4 @@ dependencies:
   - flask-sqlalchemy
   - joblib
   - matplotlib
+  - subprocess
