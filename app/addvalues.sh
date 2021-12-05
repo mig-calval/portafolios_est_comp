@@ -83,3 +83,8 @@ curl -X POST -H "Content-Type: application/json"\
 
 # Salvar el modelo más reciente a modelos.
 curl '0.0.0.0:8080/save_model'
+
+# Ejemplo de entrenar modelo pasándole la grid
+curl -X GET -H "Content-Type: application/json"\
+     -d '{"n_estimators": [60, 80], "max_features": [2, 4]}'\
+     '0.0.0.0:8080/train_model'
