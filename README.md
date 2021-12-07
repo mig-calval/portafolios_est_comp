@@ -54,11 +54,11 @@ Además de esto, muchas de las variables eran categóricas de texto, entonces se
 
 ### Procedimiento de limpieza de datos
 
-El archivo inicial de la base es ` app/healthcare-dataset-stroke-data.csv `, y através de el script de `limpieza.sh`, lo trabajamos con `awk`, `cut` y `sed` para tener la base de datos limpia. Después de esto, utilizamos la aplicación de línea de comando `jq` para pasar estos datos de `.csv` a `.txt`, *pero con el formato de json* (esto se hace en la línea 9 del `Dockerfile` ). Esto es importante para la carga de los datos a la base, ya que lo hacemos con `curl` especificando que son *json*. 
+El archivo inicial de la base es ` app/healthcare-dataset-stroke-data.csv `, y en el Dockerfile lo trabajamos con `awk`, `cut` y `sed` para tener la base de datos limpia (líneas 8-20 del Dockerfile). Después de esto, utilizamos un python one-liner en el Dockerfile para pasar estos datos de `.csv` a `.txt`, *pero con el formato de json* (esto se hace en la línea 22 del `Dockerfile` ). Esto es importante para la carga de los datos a la base, ya que lo hacemos con `curl` especificando que son *json*. 
 
 ### Guardada local de modelos
 
-En lo que nos decidimos dedicar y pasar el tiempo fuera de los requisitos base del proyexto fue en implementar un sistema robusto para guardar y accesar los modelos que se entrenan con la base de datos. 
+En lo que nos decidimos dedicar y pasar el tiempo fuera de los requisitos base del proyecto fue en implementar un sistema robusto para guardar y accesar los modelos que se entrenan con la base de datos. Tenemos dos carpetas en las que se guardan datos, `/app/modelos_locales` que son los modelos dentro del Docker, y la carpeta `/app/modelos`, que es un volúmen dentro del Docker que se guarda en la máquina local. Cuando especificamos guardar un modelo, lo pasamos de la carpeta de modelos locales a la de modelos general, y se guarda fuera de la instancia de Docker como un `.joblib`, ya que ese es el módulo de python que utilizamos para guardar los modelos entrenados. Además de esto, se guarda como csv los parámetros del modelo, y una gráfica de importancia. 
 
 ### Puntos de acceso con el API 
 
@@ -165,6 +165,7 @@ curl -X GET -H "Content-Type: application/json"\
 ```
 
 ```bash
+# Ejemplo de salvar un modelo en especifico (CUIDADO DE CHECAR LA FECHA!)
 curl -X POST -H "Content-Type: application/json"\
      -d '{"year": "2021","month": "12","day": "05","hour": "01","minute": "23","second": "10"}' \
      '0.0.0.0:8080/save_model'
@@ -174,6 +175,8 @@ curl -X POST -H "Content-Type: application/json"\
 # Salvar el modelo más reciente a modelos.
 curl '0.0.0.0:8080/save_model'
 ```
+
+**Nota**: Esta no es una lista exhaustiva. Se pueden checar los métodos de cada `request` en python para ver otras aplicaciones. 
 
 ### URLs útiles
 
@@ -186,14 +189,15 @@ Además de utilizar curl, muchas de las funciones de la aplicación están en un
 * Mostrar los modelos entrenados guardados en el Docker: `http://localhost:8080/show_local_models`
 * Guardar modelo más reciente en el folder fuera del Docker de `/app/modelos`: `http://localhost:8080/save_model`
 * Mostrar los modelos en el folder fuera del Docker de `/app/modelos`: `http://localhost:8080/show_models`
-* Mostrar gráfica de importancia para el modelo más nuevo: `http://localhost:8080/plot.png`
+* Mostrar gráfica de importancia para el modelo más nuevo en el Docker: `http://localhost:8080/importancia_local`
 * Guardar el modelo entrenado más reciente en la carpeta de `/app/models`, esta está fuera del docker y se conecta a través de un volumen: `http://localhost:8080/save_model`. 
 * Mostrar resultados de los modelos guardados localmente, es decir, en /app/modelos: `http://localhost:8080/show_results`
 
 ### Problemas a los que nos enfrentamos
 
 * Nunca pudimos hacer la carga inicial de los datos desde el Dockerfile. Esto es ya que se necesita que esté prendida la concección a `http://localhost:8080`, pero, esto solamente sucede cuando ya se corrió el `ENTRYPOINT`. Por lo tanto, decidimos que poner el comando de `docker exec` sería una buena solución a esto. 
-* Por alguna razón, si una persona en Windows bajaba el archivo desde git, no jalaba correctamente el archivo de `limpieza.sh` logramos resolverlo al comprimir el archivo y pasarlo entre nosotros, pero es un comportamiento que no sabemos como corregir. 
+* Por alguna razón, si una persona en Windows bajaba el archivo desde git, no jalaba correctamente el archivo de `limpieza.sh` logramos resolverlo quitando el archivo `.sh` y corriendo los comandos correspondientes en el Dockerfile.
+* El archivo `.jq` daba también problemas parecidos al `.sh`. Eventualmente nos dimos cuenta que [el problema era este](https://stackoverflow.com/questions/39912557/launch-basic-bash-script-on-docker-build-from-windows-system), pero al tratar de resolverlo se rompía el archivo. Optamos entonces mejor hacer esta conversión a json con python, se puede ver en la línea 22 del Dockerfile. 
 
 ### Extensiones de este trabajo
 
